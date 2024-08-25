@@ -1,6 +1,6 @@
 import sys
 import numpy as np
-from iterative import jacobi
+from iterative import jacobi, gauss_seidel
 
 def read_problem(file):
   try:
@@ -61,14 +61,26 @@ def main():
     input_file = sys.argv[1]
     A, b, tolerance, max_iterations = read_problem(input_file)
     
-    print(f"Solving: \n {A}")
-    print(f"for: {b}")
+    print("------------------------")
+    print(f"Solving: \n {A} \n")
+    print(f"For: {b}")
+    print("------------------------")
+    
     
     iterations, found_tolerance, x = jacobi(A, b, tolerance, max_iterations)
     
+    print("------------------------ JACOBI ------------------------")
     print(f"Number of iterations: {iterations}")
-    print(f"Solution vector: {x}")
+    print(f"Solution vector: \n {x.reshape(-1,1)}")
     print(f"Solution tolerance: {found_tolerance:e}")
+    print("--------------------------------------------------------\n")
+    
+    iterations, found_tolerance, x = gauss_seidel(A, b, tolerance, max_iterations)
+    print("--------------------- GAUSS-SEIDEL ---------------------")
+    print(f"Number of iterations: {iterations}")
+    print(f"Solution vector: \n {x.reshape(-1,1)}")
+    print(f"Solution tolerance: {found_tolerance:e}")
+    print("--------------------------------------------------------")
     
     
     
