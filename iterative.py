@@ -1,6 +1,6 @@
 import numpy as np
 
-def jacobi(A, b, tolerance=1e-6, max_iterations=1000):
+def jacobi(A, b, tolerance=1e-6, max_iterations=1000, verbose=False):
     # n : number of equations and unknowns
     n = len(A)
     
@@ -14,6 +14,13 @@ def jacobi(A, b, tolerance=1e-6, max_iterations=1000):
         x_new = (b - R @ x) / D
         # Usng l-infinity norm to check for convergence
         given_tolerance = np.linalg.norm(x_new - x, ord=np.inf)
+        
+        if verbose and i in range(1,5):
+            print("--------------------------")
+            print(f"Iteration {i}:\n {x_new.reshape(-1,1)}")
+            print(f"Error: {given_tolerance}")
+            print("--------------------------")
+        
         if given_tolerance < tolerance:
             final_tolerance = given_tolerance
             break
@@ -23,7 +30,7 @@ def jacobi(A, b, tolerance=1e-6, max_iterations=1000):
 
 import numpy as np
 
-def gauss_seidel(A, b, tolerance=1e-6, max_iterations=1000):
+def gauss_seidel(A, b, tolerance=1e-6, max_iterations=1000, verbose=False):
     # n : number of equations and unknowns
     n = len(A)
     
@@ -46,6 +53,13 @@ def gauss_seidel(A, b, tolerance=1e-6, max_iterations=1000):
         
         # using l-infinity norm to check for convergence
         given_tolerance = np.linalg.norm(x_new - x, ord=np.inf)
+        
+        if verbose and i in range(1,5):
+            print("--------------------------")
+            print(f"Iteration {i}:\n {x_new.reshape(-1,1)}")
+            print(f"Error: {given_tolerance}")
+            print("--------------------------")
+        
         if given_tolerance < tolerance:
             final_tolerance = given_tolerance
             break

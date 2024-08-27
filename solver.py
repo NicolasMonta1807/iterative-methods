@@ -54,9 +54,13 @@ def read_problem(file):
     
 
 def main():
-    if len(sys.argv) != 2:
+    if len(sys.argv) < 2:
         print("Usage: python jacobi.py <input_file>")
         sys.exit(1)
+        
+    verbose = False
+    if len(sys.argv) == 3 and sys.argv[2] == '--verbose':
+        verbose = True
     
     input_file = sys.argv[1]
     A, b, tolerance, max_iterations = read_problem(input_file)
@@ -67,7 +71,7 @@ def main():
     print("------------------------")
     
     
-    iterations, found_tolerance, x = jacobi(A, b, tolerance, max_iterations)
+    iterations, found_tolerance, x = jacobi(A, b, tolerance, max_iterations, verbose)
     
     print("------------------------ JACOBI ------------------------")
     print(f"Number of iterations: {iterations}")
@@ -75,7 +79,7 @@ def main():
     print(f"Solution tolerance: {found_tolerance:e}")
     print("--------------------------------------------------------\n")
     
-    iterations, found_tolerance, x = gauss_seidel(A, b, tolerance, max_iterations)
+    iterations, found_tolerance, x = gauss_seidel(A, b, tolerance, max_iterations, verbose)
     print("--------------------- GAUSS-SEIDEL ---------------------")
     print(f"Number of iterations: {iterations}")
     print(f"Solution vector: \n {x.reshape(-1,1)}")
